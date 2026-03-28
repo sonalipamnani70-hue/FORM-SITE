@@ -1,0 +1,61 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!-- ================= CLIENT PAGE ================= --><!-- Save this as: form.html --><!DOCTYPE html><html>
+<head>
+  <title>Client Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial; background:#eef2f7; }
+    .box { max-width:500px; margin:auto; padding:20px; background:white; border-radius:10px; }
+    input, select, button { width:100%; padding:10px; margin:6px 0; }
+    button { background:green; color:white; border:none; }
+    #thankyou { display:none; text-align:center; }
+  </style>
+</head>
+<body><div class="box" id="formBox">
+  <h2>SUBMIT YOUR DETAILS</h2>  <input id="name" placeholder="FULL NAME">
+  <input id="number" placeholder="MOBILE NUMBER">
+  <input id="email" placeholder="EMAIL">
+  <input id="experience" placeholder="EXPERIENCE">
+  <input id="demat" placeholder="DEMAT ACCOUNT">
+  <input id="capital" placeholder="CAPITAL">  <select id="segment">
+    <option>EQUITY / CASH / STOCKS</option>
+    <option>OPTIONS / INTRADAY</option>
+    <option>COMMODITY</option>
+    <option>FUTURES</option>
+  </select>  <input id="city" placeholder="CITY"><button onclick="save()">SUBMIT</button>
+
+</div><div class="box" id="thankyou">
+  <h2>THANK YOU!</h2>
+  <p>Your details have been submitted.</p>
+  <button onclick="openWhatsApp()">CLICK HERE TO MESSAGE ON WHATSAPP</button>
+</div><script>
+let savedRecord={};
+
+function save(){
+  let record={
+    name:name.value,
+    number:number.value,
+    email:email.value,
+    experience:experience.value,
+    demat:demat.value,
+    capital:+capital.value,
+    segment:segment.value,
+    city:city.value
+  };
+
+  savedRecord = record;
+
+  let data=JSON.parse(localStorage.getItem("clients"))||[];
+  data.push(record);
+  localStorage.setItem("clients",JSON.stringify(data));
+
+  document.getElementById("formBox").style.display="none";
+  document.getElementById("thankyou").style.display="block";
+}
+
+function openWhatsApp(){
+  let msg=`Hey there, this is Sonali! Thanks for reaching out--I'll connect with you soon.%0A%0A📌 Name: ${savedRecord.name}%0A📌 Trading Segment: ${savedRecord.segment}%0A📌 Experience: ${savedRecord.experience}%0A📌 Capital: ₹${savedRecord.capital}`;
+
+  window.open(`https://wa.me/91974653366?text=${msg}`,'_blank');
+}
+</script></body>
+</html>
